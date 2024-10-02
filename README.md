@@ -26,6 +26,12 @@ As seguintes tecnologias foram empregadas na criação deste projeto:
 
 * [OracleDB (v2.4.1)]: Uma biblioteca de acesso a banco de dados Oracle para Python, facilitando a conexão e interação com bancos de dados Oracle. Oferece suporte robusto para consultas SQL, transações e gerenciamento de conexões.
 
+## 📑 Banco de dados
+
+* Necessário criar um banco de dados usando Oracle SQL Developer:
+
+![alt text](image.png)
+
 ## 🚀 Como utilizar
 
 Clone o projeto para o local desejado em seu computador.
