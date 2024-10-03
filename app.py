@@ -90,7 +90,12 @@ def database_connection() -> bool:
 
 def main():
     connection_status = database_connection()
-    menu_options()
+
+    if connection_status:
+        menu_options()
+    else:
+        input('    Verifique a conexão com o banco de dados e tente novamente.')
+        clean_screen()
 
 
 if __name__ == "__main__":
