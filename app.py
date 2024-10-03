@@ -1,14 +1,14 @@
-import os
-from dotenv import load_dotenv
+from models.dataBase import database_connection
 
-import oracledb
-import pandas as pd
+import sys
 
 from models.validations import validate_option_digit, return_menu
 from models.system import clean_screen
 
+from models.menu_functions import register_pet, list_pets
 
-def menu():
+
+def menu() -> None:
     print('---- CRUD - PETSHOP ----\n')
 
     menu_options = (
@@ -24,7 +24,7 @@ def menu():
         print(option)
 
 
-def menu_options():
+def menu_options() -> None:
     while True:
         menu()
         option = validate_option_digit()
@@ -32,11 +32,11 @@ def menu_options():
         match option:
             case 1:
                 clean_screen()
-                print('Opção 1 selecionada')
+                register_pet()
                 return_menu()
             case 2:
                 clean_screen()
-                print('Opção 2 selecionada')
+                list_pets()
                 return_menu()
             case 3:
                 clean_screen()
@@ -53,49 +53,21 @@ def menu_options():
             case 6:
                 clean_screen()
                 print('📲  OBRIGADO POR USAR O APP CRUD - PETSHOP\n')
-                break
+                sys.exit()
+
             case _:
                 print('\n🚫  Opção inválida, tente novamente.')
 
 
-def database_connection() -> bool:
-    load_dotenv()
-    user = os.getenv('USER')
-    password = os.getenv('PASSWORD')
-
-    try:
-        conn = oracledb.connect(
-            user=user,
-            password=password,
-            dsn='oracle.fiap.com.br:1521/ORCL'
-        )
-
-        inst_register = conn.cursor()
-        inst_consultation = conn.cursor()
-        inst_change = conn.cursor()
-        inst_exclusion = conn.cursor()
-
-    except Exception as Error:
-        print(f'Erro: {Error}')
-        connection = False
-        return connection
-    else:
-        connection = True
-        return connection
-    finally:
-        clean_screen()
-        print(f"➡️   Oracle database connection... {
-              '✅' if connection == True else '🚫'}\n")
-
-
 def main():
-    connection_status = database_connection()
+    connection_database = database_connection()
 
-    if connection_status:
+    if connection_database:
         menu_options()
     else:
         input('    Verifique a conexão com o banco de dados e tente novamente.')
         clean_screen()
+        sys.exit()
 
 
 if __name__ == "__main__":

@@ -11,7 +11,7 @@ def validate_option_digit() -> int:
                 option = int(option)
                 break
             else:
-                print('\n🚫  por favor, insira apenas dígitos.')
+                print('\n🚫  Por favor, insira apenas dígitos.')
 
     return option
 

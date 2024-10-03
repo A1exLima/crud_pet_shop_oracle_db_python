@@ -30,7 +30,7 @@ As seguintes tecnologias foram empregadas na criação deste projeto:
 
 * Necessário criar um banco de dados usando Oracle SQL Developer:
 
-![alt text](image.png)
+![alt text](/public/image_db.png)
 
 ## 🚀 Como utilizar
 
