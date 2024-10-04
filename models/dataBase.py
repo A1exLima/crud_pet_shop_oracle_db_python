@@ -15,7 +15,7 @@ def database_connection() -> bool:
         conn = oracledb.connect(
             user=user,
             password=password,
-            dsn='localhost:1521/XE'
+            dsn='oracle.fiap.com.br:1521/ORCL'
         )
 
         inst_register = conn.cursor()
