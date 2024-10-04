@@ -2,6 +2,8 @@ from dotenv import load_dotenv
 import os
 import oracledb
 from models.system import clean_screen
+from models.validations import return_menu
+
 
 def database_connection() -> bool:
     load_dotenv()
@@ -48,13 +50,59 @@ def register_data_in_the_database(pet_type: str, pet_name: str, pet_age: int) ->
 
     except:
         print(f'\n🚫    Erro na transação do DB')
-    
+
     else:
         print(f'\n✅    Dados gravados com sucesso')
 
 
 def list_all_data_in_the_database() -> list:
     inst_consultation.execute(" SELECT * FROM petshop")
-    
-    data = inst_consultation.fetchall()
-    return data
+
+    list_data = inst_consultation.fetchall()
+    return list_data
+
+
+def change_records_in_the_database(pet_id: int) -> None:
+    error = False
+
+    try:
+        register = f""" SELECT * FROM petshop WHERE id = {pet_id}"""
+        inst_consultation.execute(register)
+        list_data = inst_consultation.fetchall()
+
+        if len(list_data) == 0:
+            print(f'\nNão há um pet cadastrado com o ID = {pet_id}')
+
+        else:
+            try:
+                new_pet_type = input('\nDigite um novo tipo: ')
+                new_pet_name = input('Digite um novo nome: ')
+                new_pet_age = int(input('Digite uma nova idade: '))
+
+            except ValueError:
+                while True:
+                    new_pet_age = input('\nDigite uma nova idade válida: ')
+
+                    if new_pet_age.isdigit():
+                        new_pet_age = int(new_pet_age)
+                        break
+
+                    else:
+                        print('\n🚫  Por favor, insira apenas dígitos.')
+
+            change = f"""UPDATE petshop SET
+                tipo_pet='{new_pet_type}',
+                nome_pet='{new_pet_name}',
+                idade={new_pet_age}
+                WHERE id = {pet_id}
+                """
+            inst_change.execute(change)
+            conn.commit()
+
+    except:
+        print(f'\n🚫  Erro na transação do DB, dados NÃO atualizados')
+        error = True
+
+    finally:
+        if len(list_data) > 0 and error == False:
+            print(f'\n✅  Dados atualizados com sucesso')

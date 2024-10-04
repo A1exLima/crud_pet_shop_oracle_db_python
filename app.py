@@ -5,7 +5,7 @@ import sys
 from models.validations import validate_option_digit, return_menu
 from models.system import clean_screen
 
-from models.menu_functions import register_pet, list_pets
+from models.menu_functions import register_pet, list_pets, change_pets
 
 
 def menu() -> None:
@@ -40,7 +40,7 @@ def menu_options() -> None:
                 return_menu()
             case 3:
                 clean_screen()
-                print('Opção 3 selecionada')
+                change_pets()
                 return_menu()
             case 4:
                 clean_screen()

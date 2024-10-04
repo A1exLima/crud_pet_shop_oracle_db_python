@@ -1,5 +1,6 @@
-from models.dataBase import register_data_in_the_database, list_all_data_in_the_database
+from models.dataBase import register_data_in_the_database, list_all_data_in_the_database, change_records_in_the_database
 import pandas
+
 
 def register_pet() -> None:
     try:
@@ -17,9 +18,10 @@ def register_pet() -> None:
 
             else:
                 print('\n🚫  Por favor, insira apenas dígitos.')
-    
+
     finally:
         register_data_in_the_database(pet_type, pet_name, pet_age)
+
 
 def list_pets() -> None:
     print('---- LISTAR PETS ----')
@@ -43,3 +45,21 @@ def list_pets() -> None:
     else:
         print(f'\n{data_dataFrame}')
 
+
+def change_pets() -> None:
+    try:
+        pet_id = int(input('\nDigite um ID do Pet: '))
+
+    except ValueError:
+        while True:
+            pet_id = input('\nDigite um ID válido: ')
+
+            if pet_id.isdigit():
+                pet_id = int(pet_id)
+                break
+
+            else:
+                print('\n🚫  Por favor, insira apenas dígitos.')
+
+    finally:
+        change_records_in_the_database(pet_id)
