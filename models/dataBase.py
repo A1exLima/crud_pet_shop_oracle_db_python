@@ -2,7 +2,6 @@ from dotenv import load_dotenv
 import os
 import oracledb
 from models.system import clean_screen
-from models.validations import return_menu
 
 
 def database_connection() -> bool:
@@ -106,3 +105,40 @@ def change_records_in_the_database(pet_id: int) -> None:
     finally:
         if len(list_data) > 0 and error == False:
             print(f'\n✅  Dados atualizados com sucesso')
+
+
+def delete_record_from_database(pet_id: int) -> None:
+    error = False
+
+    try:
+        register = f""" SELECT * FROM petshop WHERE id = {pet_id}"""
+        inst_consultation.execute(register)
+        list_data = inst_consultation.fetchall()
+
+        if len(list_data) == 0:
+            print(f'\nNão há um pet cadastrado com o ID = {pet_id}')
+
+        else:
+            delete_register = f"""DELETE FROM petshop WHERE id = {pet_id}"""
+            inst_exclusion.execute(delete_register)
+            conn.commit()
+
+    except:
+        print(f'\n🚫  Erro na transação do DB, dados NÃO excluídos')
+        error = True
+
+    finally:
+        if len(list_data) > 0 and error == False:
+            print(f'\n✅  Dados deletados com sucesso')
+
+
+def delete_all_records_from_the_database() -> None:
+    delete_all_registers = f"""DELETE FROM petshop"""
+    inst_exclusion.execute(delete_all_registers)
+    conn.commit()
+
+    data_reset_ids = f"""ALTER TABLE petshop MODIFY(ID GENERATED AS IDENTITY (START WITH 1))"""
+    inst_exclusion.execute(data_reset_ids)
+    conn.commit()
+
+    print(f'\n✅   Todos os registros foram excluídos')

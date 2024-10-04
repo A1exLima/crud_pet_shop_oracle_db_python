@@ -8,9 +8,8 @@ Pet Shop é uma aplicação simples no formato CRUD para desenvolver os conhecim
 * Read (ler)
 * Update (atualizar)
 * Delete (excluir)
-<br>
 
-<br>
+#### MENU:
 
 ![alt text](/public/image.png)
 
